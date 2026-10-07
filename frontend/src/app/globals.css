@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #05070c;
+  --foreground: #f3f6fa;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(62, 224, 194, 0.28);
+  color: #fff;
+}
+
+/* Atmospheric background layers */
+.app-shell {
+  position: relative;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(62, 224, 194, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 80%, rgba(47, 110, 180, 0.12), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 0% 60%, rgba(240, 180, 41, 0.05), transparent 45%),
+    linear-gradient(180deg, #05070c 0%, #0a0f18 50%, #070b12 100%);
+}
+
+.app-shell::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(243, 246, 250, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 246, 250, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent);
+  opacity: 0.5;
+}
+
+.app-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom scrollbar */
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(168, 182, 201, 0.25);
+  border-radius: 999px;
+}
+
+textarea:focus,
+button:focus-visible,
+input:focus {
+  outline: none;
+}
+
+.score-arc {
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  animation: score-draw 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes score-draw {
+  to {
+    stroke-dashoffset: var(--score-offset);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
